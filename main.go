@@ -1,13 +1,10 @@
 package main
 
 import (
+	"alfred-translate/app"
 	"fmt"
-	"os"
-
 	"github.com/jessevdk/go-flags"
-	"github.com/joho/godotenv"
-
-	"alfred_translate/app"
+	"os"
 )
 
 func main() {
@@ -24,19 +21,13 @@ func main() {
 
 	switch opts.Command {
 	case "translate":
-		initEnv()
-		app.TranslateText(opts.Text)
+		app.InitEnv()
+		lang := app.DetectLang(opts.Text)
+
+		data := app.TranslateText(opts.Text, lang)
+
+		fmt.Printf("%+v\n", data)
 	case "auth":
-		fmt.Printf("Go to link: sss ")
-	}
-}
 
-func initEnv() {
-	err := godotenv.Load()
-	if err != nil {
-		os.Exit(0)
 	}
-
-	app.EnvSetting.Token = os.Getenv("TOKEN")
-	app.EnvSetting.FolderId = os.Getenv("FOLDER_ID")
 }

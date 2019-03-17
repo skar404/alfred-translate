@@ -8,8 +8,9 @@ type Opts struct {
 }
 
 type Env struct {
-	Token string
-	FolderId string
+	Token         string
+	FolderId      string
+	WhiteListLang []string
 }
 
 var EnvSetting Env
