@@ -1,12 +1,29 @@
 package app
 
 import (
-	"github.com/joho/godotenv"
 	"os"
+	"path"
+	"runtime"
 	"strings"
+
+	"github.com/joho/godotenv"
 )
 
-func InitEnv() {
+func Init() {
+	ProjectDir()
+	ProjectEnv()
+}
+
+func ProjectDir() {
+	_, filename, _, _ := runtime.Caller(0)
+	dir := path.Join(path.Dir(filename), "..")
+	err := os.Chdir(dir)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func ProjectEnv() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		panic(err)

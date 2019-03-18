@@ -1,13 +1,18 @@
 package main
 
 import (
-	"alfred-translate/app"
 	"fmt"
-	"github.com/jessevdk/go-flags"
 	"os"
+
+	"github.com/jessevdk/go-flags"
+
+	"alfred-translate/app"
+	"alfred-translate/app/client"
 )
 
 func main() {
+	app.Init()
+
 	var opts app.Opts
 	_, err := flags.ParseArgs(&opts, os.Args)
 
@@ -21,10 +26,9 @@ func main() {
 
 	switch opts.Command {
 	case "translate":
-		app.InitEnv()
-		lang := app.DetectLang(opts.Text)
+		//lang := app.DetectLang(opts.Text)
 
-		data := app.TranslateText(opts.Text, lang)
+		data := client.TranslateText(opts.Text, "en")
 
 		fmt.Printf("%+v\n", data)
 	case "auth":

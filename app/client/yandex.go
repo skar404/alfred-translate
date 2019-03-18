@@ -1,9 +1,11 @@
-package app
+package client
 
 import (
 	"bytes"
 	"encoding/json"
 	"net/http"
+
+	"alfred-translate/app"
 )
 
 type Student struct {
@@ -26,8 +28,12 @@ func jsonHttpClient(method string, url string, body, target interface{}) {
 	_ = json.NewEncoder(buf).Encode(body)
 
 	req, err := http.NewRequest(method, url, buf)
+	if err != nil {
+		panic(err)
+	}
+
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+EnvSetting.Token)
+	req.Header.Set("Authorization", "Bearer "+app.EnvSetting.Token)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -36,12 +42,17 @@ func jsonHttpClient(method string, url string, body, target interface{}) {
 	}
 	defer resp.Body.Close()
 
-	_ = json.NewDecoder(resp.Body).Decode(target)
+	err = json.NewDecoder(resp.Body).Decode(target)
+
+	if err != nil {
+		panic(err)
+	}
+
 }
 
 func TranslateText(text string, targetLanguage string) ReqTranslate {
 	body := &Student{
-		FolderId:           EnvSetting.FolderId,
+		FolderId:           app.EnvSetting.FolderId,
 		Texts:              []string{text},
 		TargetLanguageCode: targetLanguage,
 	}
