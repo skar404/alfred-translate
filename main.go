@@ -26,11 +26,12 @@ func main() {
 
 	switch opts.Command {
 	case "translate":
-		//lang := app.DetectLang(opts.Text)
+		langList := app.GetTargetLanguageCode(app.DetectLang(opts.Text))
 
-		data := client.TranslateText(opts.Text, "en")
-
-		fmt.Printf("%+v\n", data)
+		for _, lang := range langList {
+			data := client.TranslateText(opts.Text, lang)
+			fmt.Printf("%+v\n", data)
+		}
 	case "auth":
 
 	}

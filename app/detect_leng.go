@@ -1,6 +1,8 @@
 package app
 
-import "github.com/abadojack/whatlanggo"
+import (
+	"github.com/abadojack/whatlanggo"
+)
 
 var YandexLangMap = map[whatlanggo.Lang]string{
 	whatlanggo.Afr: "af",
@@ -104,21 +106,28 @@ func getWhiteListLang() map[whatlanggo.Lang]bool {
 	return whiteList
 }
 
-func DetectLang(text string) string {
+
+func DetectLang(text string) whatlanggo.Lang {
 	whiteList := getWhiteListLang()
 
 	options := whatlanggo.Options{
 		Whitelist: whiteList,
 	}
 
-	info := whatlanggo.DetectLangWithOptions(text, options)
-
-	if val, ok := YandexLangMap[info]; ok {
-		return val
-	}
-	return ""
+	lang := whatlanggo.DetectLangWithOptions(text, options)
+	return lang
 }
 
-func TargetLanguageCode() {
 
+func GetTargetLanguageCode(lang whatlanggo.Lang) []string {
+	var langTranslate []string
+
+	for _, element := range EnvSetting.WhiteListLang {
+		langElement := whatlanggo.CodeToLang(element)
+
+		if langElement != lang {
+			langTranslate = append(langTranslate, YandexLangMap[langElement])
+		}
+	}
+	return langTranslate
 }

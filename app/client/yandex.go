@@ -8,7 +8,7 @@ import (
 	"alfred-translate/app"
 )
 
-type Student struct {
+type RequestData struct {
 	FolderId           string   `json:"folder_id"`
 	Texts              []string `json:"texts"`
 	TargetLanguageCode string   `json:"targetLanguageCode"`
@@ -19,9 +19,19 @@ type ReqTranslateText struct {
 	DetectedLanguageCode string `json:"detectedLanguageCode"`
 }
 
+type ReqErrorDetails struct {
+	Type string `json:"@type"`
+	RequestId string `json:"requestId"`
+}
+
 type ReqTranslate struct {
+	Code int `json:"code"`
+	Message string `json:"message"`
+	Details []ReqErrorDetails `json:"details"`
+
 	Translations []ReqTranslateText `json:"translations"`
 }
+
 
 func jsonHttpClient(method string, url string, body, target interface{}) {
 	buf := new(bytes.Buffer)
@@ -43,15 +53,13 @@ func jsonHttpClient(method string, url string, body, target interface{}) {
 	defer resp.Body.Close()
 
 	err = json.NewDecoder(resp.Body).Decode(target)
-
 	if err != nil {
 		panic(err)
 	}
-
 }
 
 func TranslateText(text string, targetLanguage string) ReqTranslate {
-	body := &Student{
+	body := &RequestData{
 		FolderId:           app.EnvSetting.FolderId,
 		Texts:              []string{text},
 		TargetLanguageCode: targetLanguage,
@@ -59,6 +67,5 @@ func TranslateText(text string, targetLanguage string) ReqTranslate {
 	var reqData ReqTranslate
 
 	jsonHttpClient("POST", "https://translate.api.cloud.yandex.net/translate/v2/translate", body, &reqData)
-
 	return reqData
 }
