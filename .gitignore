@@ -1,0 +1,7 @@
+.idea/
+.DS_Store
+**/*.log
+
+**/http-client.private.env.json
+
+build_app

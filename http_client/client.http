@@ -1,0 +1,17 @@
+# new API
+POST https://translate.api.cloud.yandex.net/translate/v2/translate
+Authorization: Api-Key {{api_key}}
+Content-Type: application/json
+
+{
+  "folderId": "{{folder_id}}",
+  "texts": ["Hello", "World"],
+  "targetLanguageCode": "ru"
+}
+
+### old API
+POST https://translate.yandex.net/api/v1.5/tr.json/translate
+ ?key={{old_token}}
+ &text=Hello
+ &lang=ru
+ &format=plain
