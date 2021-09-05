@@ -59,13 +59,36 @@ func translateText(text, token string) string {
 
 // Your workflow starts here
 func run() {
-	token := wf.Config.Get("api_token")
+	args := wf.Args()
 
-	text := translateText("hello world", token)
+	if len(args) < 2 {
+		wf.WarnEmpty("No matching folders found", "Try a different query?")
+		wf.SendFeedback()
+		return
+	}
 
-	// Add a "Script Filter" result
-	wf.NewItem(text)
-	// Send results to Alfred
+	command := args[0]
+
+	switch command {
+	case "translate":
+		token := wf.Config.Get("api_token")
+		text := strings.Join(args[1:], " ")
+		reqTest := translateText(text, token)
+		wf.NewItem(reqTest).
+			Var("text", reqTest).
+			Arg("ok").
+			Valid(true)
+	case "set_token":
+		wf.NewItem("Set yandex API token").
+			Subtitle("copy api token in yandex cloud and input ").
+			Arg(args[1]).
+			ActionForType("file", "copy api token in yandex cloud and input").Valid(true)
+	case "set_token_done":
+		token := args[1]
+		_ = wf.Config.Set("api_token", token, false).Do()
+	}
+
+	wf.WarnEmpty("No matching folders found", "Try a different query?")
 	wf.SendFeedback()
 }
 

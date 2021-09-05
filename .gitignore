@@ -5,3 +5,5 @@
 **/http-client.private.env.json
 
 build_app
+
+_examples/
