@@ -64,6 +64,7 @@ func main() {
 
 	flag.StringVar(&token, "token", "", "")
 	flag.StringVar(&tagName, "tag", "", "")
+	flag.Parse()
 
 	url := "https://api.github.com/repos/skar404/alfred-translate/releases"
 	urlUpload := "https://uploads.github.com/repos/skar404/alfred-translate/releases/"
