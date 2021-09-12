@@ -10,7 +10,7 @@ https://user-images.githubusercontent.com/8483941/132992545-17b26903-bae8-4188-9
 https://user-images.githubusercontent.com/8483941/132992622-1ea09f81-5710-487d-b1b7-71c73a3095ed.mp4
 
 
-### plans 
+### todo 
 
 - [ ] local cash 
 - [ ] add google api 
