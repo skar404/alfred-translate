@@ -1,4 +1,4 @@
-module alfred-translate
+module github.com/skar404/alfred-translate
 
 go 1.17
 
