@@ -6,5 +6,8 @@
 
 build_app
 app_build
+app_build_arm
 
 _examples/
+
+bin/
