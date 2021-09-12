@@ -37,6 +37,9 @@ jobs:
         run: |
           make build
 
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
       - name: Publish
         run: |
-          ./deploy -token ${{ secrets.GITHUB_TOKEN }} -tag "test_action"
+          ./deploy -token ${{ secrets.GITHUB_TOKEN }} -tag ${{ env.RELEASE_VERSION }}
