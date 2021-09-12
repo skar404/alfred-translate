@@ -24,5 +24,17 @@ Content-Type: application/json
 
 {}
 
-###
+### github create releases
+POST https://api.github.com/repos/skar404/alfred-translate/releases
+Authorization: Bearer {{github_token}}
+Content-Type: application/json
 
+{"tag_name":"test_github_api_2"}
+
+### github upload assets
+POST https://uploads.github.com/repos/skar404/alfred-translate/releases/49412475/assets?name=Makefile.zip
+Authorization: Bearer {{github_token}}
+Content-Type: application/zip
+
+< ../Makefile.zip
+###

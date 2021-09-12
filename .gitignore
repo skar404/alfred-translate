@@ -11,3 +11,5 @@ app_build_arm
 _examples/
 
 bin/
+
+*.alfredworkflow
