@@ -26,7 +26,7 @@ func run() {
 	case global.Setting:
 		commands.Setting()
 	case global.Translate:
-
+		commands.Translate()
 	}
 
 	global.WF.WarnEmpty("No Matching Items", "Try a different query?")

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	"github.com/skar404/alfred-translate/global"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -37,7 +38,7 @@ func TranslateText(text, lang string) (string, error) {
 	doneRes := ResponseDone{}
 	errRes := ResponseError{}
 
-	_, err := client.R().
+	res, err := client.R().
 		SetHeader("Authorization", fmt.Sprintf("Api-Key %s", token)).
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
@@ -46,10 +47,12 @@ func TranslateText(text, lang string) (string, error) {
 		}).
 		SetResult(&doneRes).
 		SetError(&errRes).
-		Post(fmt.Sprintf("%translate", Url))
+		Post(fmt.Sprintf("%stranslate", Url))
 
 	if err != nil {
-		return "", fmt.Errorf(errRes.Message, BadRequest)
+		log.Printf("body %s err %s", res, err)
+
+		return "", fmt.Errorf("err %s %s", errRes.Message, err.Error(), BadRequest)
 	}
 
 	var translateText []string
@@ -59,5 +62,4 @@ func TranslateText(text, lang string) (string, error) {
 	}
 
 	return strings.Join(translateText, " "), nil
-
 }

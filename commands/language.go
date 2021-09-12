@@ -53,11 +53,11 @@ func getLanguages() {
 
 	lang := getConfigLanguage()
 
-	for _, l := range [][]string{
-		{"ru", "Russian"},
-		{"us", "English"}} {
-		code := l[0]
-		langName := l[1]
+	for _, l := range []string{"ru", "en"} {
+		code := l
+		info := global.GetLangInfo(code)
+		flagCode := info.ImgCode
+		langName := info.Name
 
 		name := fmt.Sprintf("➕ %s", langName)
 		title := "Add new language"
@@ -71,7 +71,7 @@ func getLanguages() {
 		wf.NewItem(name).
 			Subtitle(title).
 			Icon(&aw.Icon{
-				Value: fmt.Sprintf("./country-flags/img/%s.png", code),
+				Value: fmt.Sprintf("./country-flags/img/%s.png", flagCode),
 				Type:  aw.IconTypeImage,
 			}).
 			Arg(code).
