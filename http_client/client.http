@@ -15,3 +15,14 @@ POST https://translate.yandex.net/api/v1.5/tr.json/translate
  &text=Hello
  &lang=ru
  &format=plain
+
+
+### get all languages
+POST https://translate.api.cloud.yandex.net/translate/v2/languages
+Authorization: Api-Key {{api_key}}
+Content-Type: application/json
+
+{}
+
+###
+

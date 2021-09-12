@@ -11,7 +11,7 @@ import (
 func getConfigLanguage() map[string]bool {
 	set := make(map[string]bool)
 
-	languages := global.WF.Config.Get(Lang)
+	languages := global.WF.Config.Get(global.Lang)
 	if languages == "" {
 		return set
 	}
@@ -30,9 +30,9 @@ func editLanguage(commandSub, value string) {
 	lang := getConfigLanguage()
 
 	switch commandSub {
-	case Add:
+	case global.Add:
 		lang[value] = true
-	case Delete:
+	case global.Delete:
 		if _, ok := lang[value]; ok {
 			delete(lang, value)
 		}
@@ -43,7 +43,7 @@ func editLanguage(commandSub, value string) {
 		newLanguages = append(newLanguages, l)
 	}
 
-	if err := wf.Config.Set(Lang, strings.Join(newLanguages, ","), false).Do(); err != nil {
+	if err := wf.Config.Set(global.Lang, strings.Join(newLanguages, ","), false).Do(); err != nil {
 		wf.FatalError(err)
 	}
 }
@@ -61,11 +61,11 @@ func getLanguages() {
 
 		name := fmt.Sprintf("➕ %s", langName)
 		title := "Add new language"
-		varName := fmt.Sprintf("%s:%s", Lang, Add)
+		varName := fmt.Sprintf("%s:%s", global.Lang, global.Add)
 		if _, ok := lang[code]; ok {
 			name = fmt.Sprintf("➖ %s", langName)
 			title = "Delete language"
-			varName = fmt.Sprintf("%s:%s", Lang, Delete)
+			varName = fmt.Sprintf("%s:%s", global.Lang, global.Delete)
 		}
 
 		wf.NewItem(name).

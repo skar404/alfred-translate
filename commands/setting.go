@@ -24,15 +24,17 @@ func runSet(key, value string) {
 	command := commandList[0]
 
 	switch command {
-	case Lang:
+	case global.Lang:
 		editLanguage(commandSub, value)
+	case global.Back:
+
 	default:
 		if err := wf.Config.Set(key, value, false).Do(); err != nil {
 			wf.FatalError(err)
 		}
 	}
 
-	if err := wf.Alfred.RunTrigger(NameAlfredExtensionSetting, ""); err != nil {
+	if err := wf.Alfred.RunTrigger(global.NameAlfredExtensionSetting, ""); err != nil {
 		wf.FatalError(err)
 	}
 
@@ -48,19 +50,28 @@ func Setting() {
 		return
 	}
 
+	back := true
+
 	switch key {
-	case Lang:
+	case global.Lang:
 		getLanguages()
-	case Token:
+	case global.Token:
 		getToken()
 	default:
+		back = false
 		wf.NewItem("Add/delete language").
 			Subtitle("↩ to edit").
 			Valid(true).
-			Var("name", Lang)
+			Var("name", global.Lang)
 		wf.NewItem("Set token").
 			Subtitle("↩ to edit").
 			Valid(true).
-			Var("name", Token)
+			Var("name", global.Token)
+	}
+
+	if back {
+		wf.NewItem("↩ back").
+			Valid(true).
+			Var("varname", global.Back)
 	}
 }

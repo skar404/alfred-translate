@@ -23,8 +23,10 @@ func run() {
 	command := global.Flag.Command
 
 	switch command {
-	case "setting":
+	case global.Setting:
 		commands.Setting()
+	case global.Translate:
+
 	}
 
 	global.WF.WarnEmpty("No Matching Items", "Try a different query?")
