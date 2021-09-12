@@ -4,6 +4,7 @@ import (
 	"fmt"
 	aw "github.com/deanishe/awgo"
 	"github.com/skar404/alfred-translate/global"
+	"github.com/skar404/alfred-translate/utils"
 	yandex_translate "github.com/skar404/alfred-translate/yandex-translate"
 	"log"
 )
@@ -13,7 +14,7 @@ func Translate() {
 
 	for lang := range getConfigLanguage() {
 		log.Printf("Translate %s", lang)
-		info := global.GetLangInfo(lang)
+		info := utils.GetLangInfo(lang)
 
 		text, err := yandex_translate.TranslateText(global.Flag.Value, lang)
 		if err != nil {

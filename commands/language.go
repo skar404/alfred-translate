@@ -4,6 +4,7 @@ import (
 	"fmt"
 	aw "github.com/deanishe/awgo"
 	"github.com/skar404/alfred-translate/global"
+	"github.com/skar404/alfred-translate/utils"
 	"log"
 	"strings"
 )
@@ -55,7 +56,7 @@ func getLanguages() {
 
 	for _, l := range []string{"ru", "en"} {
 		code := l
-		info := global.GetLangInfo(code)
+		info := utils.GetLangInfo(code)
 		flagCode := info.ImgCode
 		langName := info.Name
 

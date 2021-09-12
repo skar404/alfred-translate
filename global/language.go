@@ -5,11 +5,7 @@ type L struct {
 	Name    string
 }
 
-var langInfo = map[string]L{
+var LangInfo = map[string]L{
 	"ru": {"ru", "Russian"},
 	"en": {"us", "English"},
-}
-
-func GetLangInfo(c string) L {
-	return langInfo[c]
 }
