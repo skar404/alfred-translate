@@ -15,6 +15,5 @@ https://user-images.githubusercontent.com/8483941/132992622-1ea09f81-5710-487d-b
 - [ ] local cash 
 - [ ] add google api 
 - [ ] definitions language
-
-
+- [ ] pring app hesh in Releases and log
 
